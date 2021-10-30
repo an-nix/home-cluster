@@ -25,7 +25,7 @@ spec:
             path: /export/kube-storage/homeassistant
       containers:
         - name: raspberrypi3-homeassistant
-          image: 'homeassistant/raspberrypi3-homeassistant:stable'
+          image: 'homeassistant/homeassistant:latest'
           resources:
             limits:
               cpu: 200m
