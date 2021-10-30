@@ -20,9 +20,9 @@ spec:
     spec:
       volumes:
         - name: config-volume
-            persistentVolumeClaim:
-              claimName: homa-config
-              containers:
+          persistentVolumeClaim:
+            claimName: homa-config
+      containers:
         - name: homeassistant
           image: 'homeassistant/homeassistant:latest'
           resources:

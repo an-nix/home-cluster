@@ -10,12 +10,12 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`home.barfamily.co.il`)
+      match: Host(`home.meba.xyz`)
       services:
         - name: homeassistant
           port: 8123
     - kind: Rule
-      match: Host(`10.0.0.10`)
+      match: Host(`192.168.1.220')
       services:
         - name: homeassistant
           port: 8123
