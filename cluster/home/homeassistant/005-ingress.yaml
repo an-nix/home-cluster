@@ -19,3 +19,13 @@ spec:
       services:
         - name: homeassistant
           port: 8123
+    - kind: Rule
+      match: Host(`192.168.1.201')
+      services:
+        - name: homeassistant
+          port: 8123
+    - kind: Rule
+      match: Host(`192.168.1.250')
+      services:
+        - name: homeassistant
+          port: 8123
