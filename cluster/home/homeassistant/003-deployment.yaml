@@ -23,7 +23,7 @@ spec:
             persistentVolumeClaim:
               claimName: homa-config
               containers:
-        - name: raspberrypi3-homeassistant
+        - name: homeassistant
           image: 'homeassistant/homeassistant:latest'
           resources:
             limits:
