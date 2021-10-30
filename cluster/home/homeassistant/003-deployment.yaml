@@ -20,10 +20,9 @@ spec:
     spec:
       volumes:
         - name: config-volume
-          nfs:
-            server: 10.0.0.29
-            path: /export/kube-storage/homeassistant
-      containers:
+            persistentVolumeClaim:
+              claimName: homa-config
+              containers:
         - name: raspberrypi3-homeassistant
           image: 'homeassistant/homeassistant:latest'
           resources:
