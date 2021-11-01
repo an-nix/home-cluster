@@ -2,11 +2,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: homa-config
-  namespace: homeassistant
+  namespace: homa
 spec:
   accessModes:
-  - ReadWriteMany
-  storageClassName: longhorn
+  - ReadWriteOnce
+  storageClassName: local-path
   resources:
     requests:
-      storage: 5Gi
+      storage: 2Gi

@@ -4,7 +4,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: homeassistant
-  namespace: homeassistant
+  namespace: homa
   labels:
     app: homeassistant
 spec:
@@ -17,22 +17,23 @@ spec:
       creationTimestamp: null
       labels:
         app: homeassistant
+
     spec:
       volumes:
         - name: config-volume
           persistentVolumeClaim:
             claimName: homa-config
+      nodeSelector:
+        "kubernetes.io/zone": roche
       containers:
         - name: homeassistant
           image: 'homeassistant/home-assistant:latest'
           resources:
             limits:
               cpu: 200m
-              memory: 1024Mi
+              memory: 512Mi
           ports:
-            - name: http
-              containerPort: 8123
-              protocol: TCP
+            - containerPort: 8123
           volumeMounts:
             - name: config-volume
               mountPath: /config
@@ -42,11 +43,12 @@ spec:
           securityContext:
             privileged: true
       restartPolicy: Always
-      hostNetwork: true
+      hostNetwork: false
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
+
   strategy:
     type: RollingUpdate
     rollingUpdate:
