@@ -1,0 +1,81 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: smb-server
+  labels:
+    app: smb-server
+  namespace: homa
+spec:
+  type: LoadBalancer  # use "LoadBalancer" to get a public ip
+  selector:
+    app: smb-server
+  ports:
+    - port: 445
+      name: smb-server
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: smb-server
+  namespace: homa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smb-server
+  template:
+    metadata:
+      name: smb-server
+      labels:
+        app: smb-server
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+           - labelSelector:
+               matchExpressions:
+               - key: app
+                 operator: In
+                 values:
+                 - homeassistant
+             topologyKey: "kubernetes.io/hostname"
+      nodeSelector:
+        "kubernetes.io/os": linux
+        "kubernetes.io/zone": roche
+      containers:
+        - name: smb-server
+          image: dperson/samba
+          env:
+            - name: PERMISSIONS
+              value: "0777"
+            - name: USERNAME
+              value: homa
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: smbcreds
+              #    key: username
+            - name: PASSWORD
+              value: welcome
+              #valueFrom:
+              #  secretKeyRef:
+              #    name: smbcreds
+              #    key: password
+          args: ["-u", "$(USERNAME);$(PASSWORD)", "-s", "share;/smbshare/;yes;no;no;all;none", "-p"]
+          volumeMounts:
+            - mountPath: /smbshare
+              name: data-volume
+          ports:
+            - containerPort: 445
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: homa-config
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

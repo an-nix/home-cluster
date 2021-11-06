@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: antoni.nicolas@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: letsencrypt-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - dns01:
+        webhook:
+          groupName: meba.xyz # name of the group you setted at the start of this course
+          solverName: ovh
+          config:
+            endpoint: ovh-eu # Endpoint you will use , it was proved at the creation of the API
+            applicationKey: jKVeGj4iAZtlc7iw
+            applicationSecretRef:
+              key: applicationSecret 
+              name: ovh-credentials # name of the secret you created for the application secret 
+            consumerKey: qfNiAX8p3KUIYCHlIhedxNjFFLqpSzIV
