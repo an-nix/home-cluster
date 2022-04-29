@@ -41,9 +41,6 @@ spec:
                  values:
                  - homeassistant
              topologyKey: "kubernetes.io/hostname"
-      nodeSelector:
-        "kubernetes.io/os": linux
-        "kubernetes.io/zone": roche
       containers:
         - name: smb-server
           image: dperson/samba

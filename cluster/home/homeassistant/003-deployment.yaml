@@ -23,8 +23,6 @@ spec:
         - name: config-volume
           persistentVolumeClaim:
             claimName: homa-config
-      nodeSelector:
-        "kubernetes.io/zone": roche
       containers:
         - name: homeassistant
           image: 'homeassistant/home-assistant:latest'
