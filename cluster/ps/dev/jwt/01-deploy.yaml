@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: # ici les metadata lié au Deployment 
+  name: jwt-token
+  namespace: dev
+spec: # Ici les spécifications du Deployment
+  # Lance 3 Pods 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jwt-token
+  template:
+    metadata: # ici les metadata lié aux Pods (ne pas confondre avec les précédents) 
+      labels:
+        app: jwt-token
+    spec: # Ici les spécifications des Pods
+      containers: 
+      #JWT Token
+      - name: jwt-token
+        image: registry.dev.meba.xyz/jwt-token:rc3
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred

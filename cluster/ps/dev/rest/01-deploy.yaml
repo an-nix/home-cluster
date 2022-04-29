@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: # ici les metadata lié au Deployment 
+  name: recipes-api
+  namespace: dev
+spec: # Ici les spécifications du Deployment
+  # Lance 3 Pods 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recipes-api
+  template:
+    metadata: # ici les metadata lié aux Pods (ne pas confondre avec les précédents) 
+      labels:
+        app: recipes-api
+    spec: # Ici les spécifications des Pods
+      containers: 
+      #JWT Token
+      - name: recipes-api
+        image: registry.dev.meba.xyz/recipes-api:rc
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /CONFIG
+          name: config
+        - mountPath: /LOGS     
+          name: logs
+
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: config
+        hostPath:
+          path: /home/ubuntu/home-cluster/cluster/ps/dev/rest/config/
+      - name: logs
+        hostPath:
+          path: /home/ubuntu//home-cluster/cluster/ps/dev/rest/logs/
