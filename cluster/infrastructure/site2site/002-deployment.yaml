@@ -49,7 +49,7 @@ spec:
           volumeMounts:
           - mountPath: /lib/modules
             name: lib-modules
-          - name: wg-mx-volume
+          - name: wg-config
             mountPath: /config
           securityContext:
             capabilities:
@@ -60,9 +60,9 @@ spec:
       - name: lib-modules
         hostPath:
           path: /lib/modules
-      - name: wg-mx-volume
+      - name: wg-config
         persistentVolumeClaim:
-          claimName: wg-mx-config
+          claimName: wg-config
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
