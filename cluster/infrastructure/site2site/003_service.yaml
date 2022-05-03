@@ -1,0 +1,19 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: wireguard
+  namespace: site2site
+  labels:
+    app: wireguard
+    kubernetes.io/name: wireguard
+spec:
+  type: NodePort
+  ports:
+    - name: wireguard
+      nodePort: 31821
+      port: 51820
+      protocol: UDP
+  selector:
+    app: wireguard
