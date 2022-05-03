@@ -1,0 +1,19 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: wg-mx
+  namespace: wireguard
+  labels:
+    app: wg-mx
+    kubernetes.io/name: wg-mx
+spec:
+  type: NodePort
+  ports:
+    - name: wireguard
+      nodePort: 31820
+      port: 51820
+      protocol: UDP
+  selector:
+    app: wg-mx

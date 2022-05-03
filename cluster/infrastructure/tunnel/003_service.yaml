@@ -1,0 +1,24 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: rpimx
+  namespace: tunnel
+  labels:
+    app: rpimx
+    kubernetes.io/name: rpimxssh
+spec:
+  type: NodePort
+  ports:
+    - name: ssh
+      nodePort: 30222
+      port: 2222
+    - name: sshforward
+      nodePort: 31022
+      port: 22
+    - name: wgforward
+      nodePort: 31222
+      port: 22222
+  selector:
+    app: rpimx
