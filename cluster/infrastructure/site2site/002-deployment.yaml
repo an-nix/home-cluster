@@ -38,6 +38,8 @@ spec:
             value: "10.44.22.0"
           - name: ALLOWEDIPS
             value: "0.0.0.0"
+          - name: SERVER_ALLOWEDIPS_PEER_hs
+            value: "192.168.74.0/24"
           - name: LOG_CONFS
             value: "false"
           ports:

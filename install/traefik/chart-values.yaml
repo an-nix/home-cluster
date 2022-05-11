@@ -1,0 +1,46 @@
+---
+ports:
+#  web:
+#    port: 8080
+#  websecure:
+#    port: 8443
+#  dashboard:
+#    port: 9000
+  traefik:
+    port: 8080
+    expose: true
+    exposedPort: 8080
+    protocol: TCP
+  ssh:
+    port: 2222
+    expose: true
+    exposedPort: 2222
+    protocol: TCP
+  web:
+    expose: true
+    exposedPort: 80
+    port: 8000
+    protocol: TCP
+    redirectTo: websecure
+  websecure:
+     expose: true
+     exposedPort: 443
+     port: 8443
+     protocol: TCP
+     tls:
+       certResolver: le
+       domains:
+       - main: meba.xyz
+         sans:
+         - '*.meba.xyz'
+       enabled: true
+       options: ""
+
+additionalArguments:
+- "--providers.kubernetescrd"
+- "--api.dashboard=true"
+- "--api.insecure=true"
+
+ingressRoute:
+  dashboard:
+    enabled: false

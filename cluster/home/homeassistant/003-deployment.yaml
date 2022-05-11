@@ -25,7 +25,7 @@ spec:
             claimName: homa-config
       containers:
         - name: homeassistant
-          image: 'homeassistant/home-assistant:latest'
+          image: 'homeassistant/home-assistant:beta'
           resources:
             limits:
               cpu: 200m
