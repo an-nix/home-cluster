@@ -1,4 +1,17 @@
-
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mqtt-meba-xyz
+  namespace: mosquitto
+spec:
+  commonName:  mqtt.meba.xyz
+  secretName: tls-mqtt
+  dnsNames:
+    - mqtt.meba.xyz
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
@@ -23,4 +36,4 @@ spec:
   tls:
     domains:
     - main: mqtt.meba.xyz
-    secretName: domain-co-uk-wcard
+    secretName: tls-mqtt
