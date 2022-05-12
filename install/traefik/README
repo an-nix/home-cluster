@@ -1,0 +1,38 @@
+# Traefik installation
+
+## Description
+
+Install traefik on K8S Cluster
+
+## Installation steps
+
+Add traefik repo to helm
+```
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
+```
+
+Create traefik namespace
+```
+kubectl create namespace traefik
+```
+
+Install traefik
+```
+helm install traefik traefik/traefik --namespace=traefik --values=tchart-values.yaml
+```
+
+Generate base64 encoded htpasswd and traefik secret
+```
+TRAEFIK_AUTH=$(htpasswd -nb admin password | openssl base64)
+
+kubectl create secret generic traefik-dashboard-auth --from-literal=users=$TRAEFIK_AUTH -n traefik
+```
+
+Change rules according to the domain
+```
+kubecl apply -f dashboard.yaml
+```
+
+## Documentation
+https://traefik.io/blog/install-and-configure-traefik-with-helm/
