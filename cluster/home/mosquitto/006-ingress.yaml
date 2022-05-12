@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mosquitto
+  namespace: mosquitto
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: mqtt
+spec:
+  tls:
+    - hosts:
+        - mqtt.meba.xyz
+      secretName: tls-mqtt
+  rules:
+  - host: mqtt.meba.xyz
+    tcp:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: mosquitto
+              port:
+                number: 1883

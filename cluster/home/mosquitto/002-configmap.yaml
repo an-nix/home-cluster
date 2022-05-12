@@ -7,7 +7,7 @@ metadata:
   namespace: mosquitto
 data:
   mosquitto.conf: |
-    allow_anonymous false
+    allow_anonymous true
     password_file /mosquitto/config/passwordfile
     # Port to use for the default listener.
     port 1883
