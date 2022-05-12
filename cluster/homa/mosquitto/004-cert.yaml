@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mqtt-home-meba-xyz
+  namespace: homa
+spec:
+  commonName:  mqtt.home.meba.xyz
+  secretName: tls-mqtt-home-meba-xyz
+  dnsNames:
+    - mqtt.home.meba.xyz
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer

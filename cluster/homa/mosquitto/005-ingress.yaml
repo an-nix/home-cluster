@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mosquitto
+  namespace: homa
+spec:
+  
+  entryPoints:
+    - mqtt
+  routes:
+    - kind: Rule
+      match: HostSNI("mqtt.home.meba.xyz")
+      services:
+        - name: mosquitto
+          port: 1883
+  
+  tls:
+    domains:
+    - main: mqtt.home.meba.xyz
+    secretName: tls-mqtt-home-meba-xyz
