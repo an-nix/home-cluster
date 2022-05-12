@@ -9,6 +9,23 @@ spec:
     secret: traefik-dashboard-auth
 
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-meba-xyz
+  namespace: traefik
+spec:
+  commonName:  traefik.meba.xyz
+  secretName: tls-traefik-meba-xyz
+  dnsNames:
+    - traefik.meba.xyz
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+    
+---
+
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -28,3 +45,7 @@ spec:
       services:
         - name: api@internal
           kind: TraefikService
+  tls:
+    domains:
+    - main: trafik.meba.xyz
+    secretName: tls-traefik-meba-xyz
