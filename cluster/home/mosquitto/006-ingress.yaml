@@ -1,27 +1,26 @@
+
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
 metadata:
   name: mosquitto
   namespace: mosquitto
   annotations:
     kubernetes.io/ingress.class: traefik
     cert-manager.io/cluster-issuer: letsencrypt-production
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.entrypoints: mqtt
 spec:
+#  tls: true
+  
+  entryPoints:
+    - mqtt
+  routes:
+    - kind: Rule
+      match: HostSNI("mqtt.meba.xyz")
+      services:
+        - name: mosquitto
+          port: 1883
+  
   tls:
-    - hosts:
-        - mqtt.meba.xyz
-      secretName: tls-mqtt
-  rules:
-  - host: mqtt.meba.xyz
-    tcp:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: mosquitto
-              port:
-                number: 1883
+    domains:
+    - main: mqtt.meba.xyz
+    secretName: domain-co-uk-wcard

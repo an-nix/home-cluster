@@ -36,11 +36,8 @@ spec:
             - name: secrets-volume
               mountPath: /tmp/secrets
           env:
-            - name: PASSWORDFILE
-              valueFrom:
-                secretKeyRef:
-                  name: mosquitto
-                  key: passwordfile
+          - name: PASSWORDFILE
+            value: "antoni01:$6$3MBxQliQcldieocT$VclCyD0sfCn3lLK2MfNTFYjEwJ4KZCWj6MDGm2vfOCPxnovAlR3lYyOPaZx4+wrzHpS5m6VQb1H4MI/eklRXiw==" 
           command: ['sh', '-c', "echo $PASSWORDFILE > /tmp/secrets/passwordfile"]
       containers:
         - name: mosquitto
