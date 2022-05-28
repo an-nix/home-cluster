@@ -11,10 +11,22 @@ ports:
     expose: true
     exposedPort: 8080
     protocol: TCP
+# MQTT
+  mqtt:
+    port: 1883
+    expose: true
+    exposedPort: 1883
+    protocol: TCP
+# WireGuard MX  
+  wg:
+    port: 51820
+    expose: true
+    exposedPort: 40453
+    protocol: UDP
   ssh:
     port: 2222
     expose: true
-    exposedPort: 2222
+    exposedPort: 22
     protocol: TCP
   web:
     expose: true

@@ -50,6 +50,8 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
+      nodeSelector:
+        zone: datacenter
   strategy:
     type: RollingUpdate
     rollingUpdate:

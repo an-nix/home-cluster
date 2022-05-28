@@ -9,10 +9,9 @@ metadata:
     app: wg-mx
     kubernetes.io/name: wg-mx
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: wireguard
-      nodePort: 31820
       port: 51820
       protocol: UDP
   selector:
