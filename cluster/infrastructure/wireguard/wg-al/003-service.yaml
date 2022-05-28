@@ -1,0 +1,20 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: wg-al
+  namespace: wireguard
+  labels:
+    app: wg-al
+    kubernetes.io/name: wg-al
+spec:
+#  type: ClusterIP
+  type: LoadBalancer
+  ports:
+    - name: wireguard
+      port: 40454
+      targetPort: 51820
+      protocol: UDP
+  selector:
+    app: wg-al

@@ -3,35 +3,35 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: wg-mx
+  name: wg-al
   namespace: wireguard
   labels:
-    app: wg-mx
+    app: wg-al
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wg-mx
+      app: wg-al
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: wg-mx
+        app: wg-al
     spec:
       containers:
-        - name: wg-mx
+        - name: wg-al
           image: 'lscr.io/linuxserver/wireguard:latest'
           env:
           - name: SERVERURL
             value: "vpn.meba.xyz"
           - name: SERVERPORT
-            value: "40453"
+            value: "40454"
           - name: PEERS
-            value: "p30,elenaPhone,elenaTab,elenaPhone, freebox"
+            value: "p30,rpimx,freebox,elenaTab,elenaPhone"
           - name: PEERDNS
             value: "auto"
           - name: INTERNAL_SUBNET
-            value: "192.168.100.0"
+            value: "192.168.101.0"
           - name: ALLOWEDIPS
             value: "0.0.0.0/0"
           - name: LOG_CONFS
@@ -45,7 +45,7 @@ spec:
           volumeMounts:
           - mountPath: /lib/modules
             name: lib-modules
-          - name: wg-mx-volume
+          - name: wg-al-volume
             mountPath: /config
           securityContext:
             capabilities:
@@ -56,16 +56,16 @@ spec:
       - name: lib-modules
         hostPath:
           path: /lib/modules
-      - name: wg-mx-volume
+      - name: wg-al-volume
         persistentVolumeClaim:
-          claimName: wg-mx-config
+          claimName: wg-al-config
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
       nodeSelector:
-        zone: mexico
+        zone: alsace
   strategy:
     type: RollingUpdate
     rollingUpdate:
