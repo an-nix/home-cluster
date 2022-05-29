@@ -18,16 +18,22 @@ ports:
     exposedPort: 1883
     protocol: TCP
 # WireGuard MX  
-  wg:
-    port: 51820
-    expose: true
-    exposedPort: 40453
-    protocol: UDP
-  ssh:
-    port: 2222
-    expose: true
-    exposedPort: 22
-    protocol: TCP
+#  wg-mx:
+#    port: 51820
+#    expose: true
+#    exposedPort: 40453
+#    protocol: UDP
+# WireGuard AL
+#  wg-al:
+#    port: 40454
+#    expose: true
+#    exposedPort: 40454
+#    protocol: UDP
+#  ssh:
+#    port: 2222
+#    expose: true
+#    exposedPort: 22
+#    protocol: TCP
   web:
     expose: true
     exposedPort: 80
