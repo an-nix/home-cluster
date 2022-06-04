@@ -21,27 +21,18 @@ spec:
       volumes:
         - name: mosquitto-conf
           configMap:
-            name: mosquitto
+            name: mosquitto-config
             defaultMode: 420
-        - name: secrets-volume
-          emptyDir: {}
+        #- name: mosquitto-passwd
+        #  configMap:
+        #    name: mosquitto-passwd
+        #    items:
+        #    - key: passwdfile
+        #      path: passwdfile
         - name: localtime
           hostPath:
             path: /etc/localtime
             type: ''
-      initContainers:
-        - name: init-secrets
-          image: busybox:1.28
-          volumeMounts:
-            - name: secrets-volume
-              mountPath: /tmp/secrets
-          env:
-          - name: PASSWORDFILE
-            valueFrom:
-              secretKeyRef:
-                name: mosquitto
-                key: passwdfile
-          command: ['sh', '-c', "echo $PASSWORDFILE > /tmp/secrets/passwordfile"]
       containers:
         - name: mosquitto
           image: 'eclipse-mosquitto:2.0.14'
@@ -59,12 +50,11 @@ spec:
           volumeMounts:
             - name: mosquitto-conf
               readOnly: true
-              mountPath: /mosquitto/config/mosquitto.conf
-              subPath: mosquitto.conf
-            - name: secrets-volume
-              readOnly: true
-              mountPath: /mosquitto/config/passwordfile
-              subPath: passwordfile
+              mountPath: /mosquitto/config
+            #  subPath: mosquitto.conf
+            #- name: mosquitto-passwd
+            #  mountPath: /mosquitto/config/passwdfile
+            #  subPath: passwdfile
             - name: localtime
               mountPath: /etc/localtime
           terminationMessagePath: /dev/termination-log

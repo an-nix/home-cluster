@@ -9,9 +9,13 @@ metadata:
     app: homeassistant
     kubernetes.io/name: homeassistant
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 8123
+      nodePort: 31823
+    - name: rsync
+      port: 873
+      nodePort: 31873
   selector:
     app: homeassistant

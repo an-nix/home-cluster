@@ -21,9 +21,47 @@ spec:
     spec:
       volumes:
         - name: config-volume
-          persistentVolumeClaim:
-            claimName: homa-config
+          hostPath:
+            path: /data/volumes/homa/homeassistant/config/
+         # persistentVolumeClaim:
+         #   claimName: homa-config
+        - name: config-yaml
+          configMap: 
+            name: homeassistant-config
+            items:
+            - key: automations.yaml 
+              path: automations.yaml
+            - key: configuration.yaml
+              path: configuration.yaml
+            - key: groups.yaml
+              path: groups.yaml
+            - key: scenes.yaml
+              path: scenes.yaml
+            - key: scripts.yaml
+              path: scripts.yaml
+            - key: secrets.yaml
+              path: secrets.yaml
+#configuration.yaml  groups.yaml  home-assistant.log  home-assistant.log.1  home-assistant.log.fault  scenes.yaml  scripts.yaml  secrets.yaml
       containers:
+        - name: syncmaster
+          image: 'mebaxyz/sync-master:latest'
+          volumeMounts:
+          - name: config-volume
+            mountPath: /config
+          imagePullPolicy: Always
+          env:
+          - name: MQTT_SERVER
+            value: 'mosquitto'
+          - name: MQTT_USERNAME
+            value: 'user'
+          - name: MQTT_PASSWORD
+            value: 'welcome'
+          - name: NODE_HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          ports:
+          - containerPort: 873
         - name: homeassistant
           image: 'homeassistant/home-assistant:beta'
           resources:
@@ -33,8 +71,26 @@ spec:
           ports:
             - containerPort: 8123
           volumeMounts:
-            - name: config-volume
-              mountPath: /config
+          - name: config-volume
+            mountPath: /config
+          - name: config-yaml
+            mountPath: /config/automations.yaml
+            subPath: automations.yaml
+          - name: config-yaml
+            mountPath: /config/configuration.yaml
+            subPath: configuration.yaml
+          - name: config-yaml
+            mountPath: /config/groups.yaml
+            subPath: groups.yaml
+          - name: config-yaml
+            mountPath: /config/scenes.yaml
+            subPath: scenes.yaml
+          - name: config-yaml
+            mountPath: /config/scripts.yaml
+            subPath: scripts.yaml
+          - name: config-yaml
+            mountPath: /config/secrets.yaml
+            subPath: secrets.yaml
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
