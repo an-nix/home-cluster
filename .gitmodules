@@ -1,0 +1,3 @@
+[submodule "install/cert-manager/cert-manager-webhook-ovh"]
+	path = install/cert-manager/cert-manager-webhook-ovh
+	url = https://github.com/baarde/cert-manager-webhook-ovh.git
