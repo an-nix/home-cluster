@@ -3,11 +3,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: rpimx
-  namespace: tunnel
+  name: rpimx-tunnel
+  namespace: infrastructure
   labels:
-    app: rpimx
-    kubernetes.io/name: rpimxssh
+    app: rpimx-tunnel
 spec:
   type: NodePort
   ports:
@@ -21,4 +20,4 @@ spec:
       nodePort: 31222
       port: 22222
   selector:
-    app: rpimx
+    app: rpimx-tunnel

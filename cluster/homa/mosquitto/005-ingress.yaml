@@ -5,16 +5,13 @@ metadata:
   name: mosquitto
   namespace: homa
 spec:
-  
   entryPoints:
     - mqtt
   routes:
-    - kind: Rule
-      match: HostSNI("mqtt.home.meba.xyz")
+    - match: HostSNI("mqtt.home.meba.xyz")
       services:
         - name: mosquitto
           port: 1883
-  
   tls:
     domains:
     - main: mqtt.home.meba.xyz

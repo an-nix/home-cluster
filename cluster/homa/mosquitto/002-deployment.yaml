@@ -21,7 +21,7 @@ spec:
       volumes:
         - name: mosquitto-conf
           configMap:
-            name: mosquitto-config
+            name: mosquitto
             defaultMode: 420
         #- name: mosquitto-passwd
         #  configMap:

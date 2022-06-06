@@ -10,5 +10,5 @@ spec:
   dnsNames:
     - mqtt.home.meba.xyz
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-prod
     kind: ClusterIssuer

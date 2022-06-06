@@ -20,11 +20,17 @@ spec:
 
     spec:
       volumes:
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
         - name: config-volume
           hostPath:
             path: /data/volumes/homa/homeassistant/config/
          # persistentVolumeClaim:
          #   claimName: homa-config
+        - name: wg-config
+          configMap:
+            name: gateway-config
         - name: config-yaml
           configMap: 
             name: homeassistant-config
@@ -42,26 +48,30 @@ spec:
             - key: secrets.yaml
               path: secrets.yaml
 #configuration.yaml  groups.yaml  home-assistant.log  home-assistant.log.1  home-assistant.log.fault  scenes.yaml  scripts.yaml  secrets.yaml
-      containers:
-        - name: syncmaster
-          image: 'mebaxyz/sync-master:latest'
-          volumeMounts:
-          - name: config-volume
-            mountPath: /config
+      initContainers:
+#      containers:
+        - name: wg-al
+          image: 'mebaxyz/wireguard-init:latest'
           imagePullPolicy: Always
+          volumeMounts:
+          - mountPath: /lib/modules
+            name: lib-modules
+          - name: wg-config
+            mountPath: /etc/wireguard
           env:
-          - name: MQTT_SERVER
-            value: 'mosquitto'
-          - name: MQTT_USERNAME
-            value: 'user'
-          - name: MQTT_PASSWORD
-            value: 'welcome'
-          - name: NODE_HOSTNAME
+          - name: NODE_NAME
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
-          ports:
-          - containerPort: 873
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+              - SYS_MODULE
+      containers:
+#        - name: syncmaster
+#          image: 'ubuntu:latest'
+#          command: ["sh","-c","sleep 3600;"]
         - name: homeassistant
           image: 'homeassistant/home-assistant:beta'
           resources:

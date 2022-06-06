@@ -1,28 +1,26 @@
----
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rpimxssh
-  namespace: runnel
+  name: nginx
+#  namespace: homa
   annotations:
     kubernetes.io/ingress.class: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
     - hosts:
-        - ssh.mx.meba.xyz
-      secretName: tls-home
+        - who.meba.xyz
+      secretName: tls-who
   rules:
-  - host: ssh.mx.meba.xyz
+  - host: who.meba.xyz
     http:
       paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: rpimxssh
+              name: nginx
               port:
-                number: 2222
+                number: 80

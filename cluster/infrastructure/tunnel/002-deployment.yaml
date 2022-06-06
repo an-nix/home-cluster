@@ -3,23 +3,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: rpimx
-  namespace: tunnel
+  name: rpimx-tunnel
+  namespace: infrastructure
   labels:
-    app: rpimx
+    app: rpimx-tunnel
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rpimx
+      app: rpimx-tunnel
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: rpimx
+        app: rpimx-tunnel
     spec:
       containers:
-        - name: rpimx
+        - name: rpimx-tunnel
           image: 'mebaxyz/openssh-server'
           env:
           - name: PUID
@@ -51,7 +51,9 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
       nodeSelector:
-        zone: datacenter
+        #zone: datacenter
+        #wg-node: central
+        kubernetes.io/hostname: vps-e750b1ad
   strategy:
     type: RollingUpdate
     rollingUpdate:

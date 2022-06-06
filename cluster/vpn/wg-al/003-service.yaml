@@ -4,7 +4,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: wg-al
-  namespace: wireguard
+  namespace: vpn
   labels:
     app: wg-al
     kubernetes.io/name: wg-al

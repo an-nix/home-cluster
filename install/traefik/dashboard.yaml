@@ -1,13 +1,12 @@
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: traefik-dashboard-basicauth
-  namespace: traefik
-spec:
-  basicAuth:
-    secret: traefik-dashboard-auth
-
+#---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: Middleware
+#metadata:
+#  name: traefik-dashboard-basicauth
+#  namespace: traefik
+#spec:
+#  basicAuth:
+#    secret: traefik-dashboard-auth
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -15,15 +14,13 @@ metadata:
   name: traefik-meba-xyz
   namespace: traefik
 spec:
-  commonName:  traefik.meba.xyz
-  secretName: tls-traefik-meba-xyz
+  commonName: traefik.meba.xyz
   dnsNames:
-    - traefik.meba.xyz
+  - "traefik.meba.xyz"
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-prod
     kind: ClusterIssuer
-    
----
+  secretName: tls-traefik-meba-xyz
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -31,20 +28,18 @@ kind: IngressRoute
 metadata:
   name: traefik-dashboard
   namespace: traefik
-
 spec:
   entryPoints:
     - websecure
-
   routes:
-    - match: Host(`traefik.domain.xyz`)
+    - match: Host(`traefik.meba.xyz`)
       kind: Rule
-     middlewares:
-        - name: traefik-dashboard-basicauth
-          namespace: traefik
+#     middlewares:
+#        - name: traefik-dashboard-basicauth
+#          namespace: traefik
       services:
-        - name: api@internal
-          kind: TraefikService
+      - name: api@internal
+        kind: TraefikService
   tls:
     domains:
     - main: trafik.meba.xyz

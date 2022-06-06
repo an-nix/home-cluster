@@ -4,7 +4,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: wg-mx
-  namespace: wireguard
+  namespace: vpn
   labels:
     app: wg-mx
 spec:

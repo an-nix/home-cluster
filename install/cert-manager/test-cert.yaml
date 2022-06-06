@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: who
+spec:
+  dnsNames:
+  - "vpn.meba.xyz"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  secretName: test-meba-xyz-tls
