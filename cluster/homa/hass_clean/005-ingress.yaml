@@ -1,0 +1,57 @@
+---
+
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: homeassistant
+#  namespace: homa
+#spec:
+#  entryPoints:
+#    - websecure
+#  routes:
+#    - kind: Rule
+#      match: Host(`home.meba.xyz`)
+#      services:
+#        - name: homeassistant
+#          port: 8123
+#    - kind: Rule
+#      match: Host(`192.168.1.220`) && PathPrefix(`/homa`)
+#      services:
+#        - name: homeassistant
+#          port: 8123
+#    - kind: Rule
+#      match: Host(`192.168.1.221`) && PathPrefix(`/homa`)
+#      services:
+#        - name: homeassistant
+#          port: 8123
+#    - kind: Rule
+#      match: Host(`192.168.1.222`) && PathPrefix(`/homa`)
+#      services:
+#        - name: homeassistant
+#          port: 8123
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homeassistant
+  namespace: homa-dev
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+    - hosts:
+        - clean.home.meba.xyz
+      secretName: tls-home
+  rules:
+  - host: clean.home.meba.xyz
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: homeassistant
+              port:
+                number: 8123

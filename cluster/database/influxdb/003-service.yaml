@@ -1,0 +1,19 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: influxdb
+  namespace: database
+  labels:
+    app: influxdb
+    kubernetes.io/name: influxdb
+spec:
+  type: LoadBalancer
+  ports:
+    - name: influxdb
+      port: 8086
+      targetPort: 8086
+#     nodePort: 30086
+  selector:
+    app: influxdb

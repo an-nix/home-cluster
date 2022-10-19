@@ -1,0 +1,1 @@
+kubectl crete configmap nodered-settings --from-file=settings.js

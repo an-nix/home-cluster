@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: influxdb
+  namespace: database
+spec:
+  serviceName: "influxdb-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      nodeSelector:
+        zone: datacenter
+      containers:
+      - name: influxdb
+        image: influxdb:2.3.0
+        ports:
+        - containerPort: 8006
+        env:
+        volumeMounts:
+        - name: datadir
+          mountPath: /root/.influxdbv2
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 3G

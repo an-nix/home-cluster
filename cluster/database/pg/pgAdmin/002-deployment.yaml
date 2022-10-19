@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin
+  namespace: database
+  labels:
+    app: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+      - name: pgadmin
+        image: dpage/pgadmin4
+        imagePullPolicy: Always
+        env:        
+        - name: PGADMIN_DEFAULT_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin-config
+              key: PGADMIN_DEFAULT_EMAIL
+        - name: PGADMIN_DEFAULT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin-config
+              key: PGADMIN_DEFAULT_PASSWORD
+        - name: PGADMIN_LISTEN_PORT
+          value: "80"
+        volumeMounts:
+          - mountPath: /var/lib/pgadmin 
+            name: pgadmin-volume  
+      volumes:
+      - name: pgadmin-volume
+        persistentVolumeClaim:
+          claimName: pgadmin-volume

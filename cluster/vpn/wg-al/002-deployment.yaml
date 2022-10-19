@@ -27,7 +27,7 @@ spec:
           - name: SERVERPORT
             value: "40454"
           - name: PEERS
-            value: "p30,rpimx,freebox,elenaTab,elenaPhone"
+            value: "p30,elenaFreePhone,elenaIPad,elenaMxPhone, freebox"
           - name: PEERDNS
             value: "auto"
           - name: INTERNAL_SUBNET

@@ -4,9 +4,9 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: homeassistant
-  namespace: homa
+  namespace: homa-dev
   labels:
-    app: homeassistant
+    app: homassistant
 spec:
   replicas: 1
   selector:
@@ -20,40 +20,10 @@ spec:
 
     spec:
       volumes:
-        - name: lib-modules
-          hostPath:
-            path: /lib/modules
         - name: config-volume
           hostPath:
-            path: /data/volumes/homa/homeassistant/config/
-         # persistentVolumeClaim:
-         #   claimName: homa-config
-        - name: wg-config
-          configMap:
-            name: gateway-config
-      initContainers:
-        - name: wg-al
-          image: 'mebaxyz/wireguard-init:latest'
-          imagePullPolicy: Always
-          volumeMounts:
-          - mountPath: /lib/modules
-            name: lib-modules
-          - name: wg-config
-            mountPath: /etc/wireguard
-          env:
-          - name: NODE_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-              - SYS_MODULE
+            path: /data/volumes/homa/hass_clean/config/
       containers:
-#        - name: syncmaster
-#          image: 'ubuntu:latest'
-#          command: ["sh","-c","sleep 3600;"]
         - name: homeassistant
           image: 'homeassistant/home-assistant:beta'
           resources:
@@ -76,9 +46,7 @@ spec:
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
-      nodeName: vps-e750b1ad 
-#     nodeSelector:
-#        zone: datacenter
+      nodeName: vps-e750b1ad
   strategy:
     type: RollingUpdate
     rollingUpdate:

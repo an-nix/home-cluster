@@ -1,0 +1,33 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  creationTimestamp: '2022-10-19T18:36:30Z'
+  generation: 2
+  labels:
+    team: meba
+  name: meba-homa-cluster
+  namespace: homa
+spec:
+  allowedSourceRanges: []
+  databases:
+    homeassistant: homeassistant
+  enableConnectionPooler: true
+  numberOfInstances: 2
+  postgresql:
+    version: '14'
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+  teamId: meba
+  users:
+    homeassistant: []
+  volume:
+    iops: 3000
+    size: 2Gi
+    throughput: 125
+status:
+  PostgresClusterStatus: Running

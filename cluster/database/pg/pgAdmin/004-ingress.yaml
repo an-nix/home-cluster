@@ -1,0 +1,29 @@
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "pgadmin"
+  namespace: "database"
+  labels:
+    application: "pgadmin"
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  # ingressClassName: "ingress-nginx"
+  tls:
+  - hosts:
+      - postgresql.db.meba.xyz
+    secretName: tls-postgres
+  rules:
+    - host: "postgresql.db.meba.xyz"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: "pgadmin"
+                port:
+                  number: 80

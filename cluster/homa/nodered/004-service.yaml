@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-red
+  namespace: homa
+  labels:
+    app: node-red
+spec:
+  selector:
+    app: node-red
+  type: ClusterIP
+  ports:
+  - name: web
+    port: 1880
+    targetPort: 1880

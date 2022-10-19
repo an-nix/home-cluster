@@ -1,0 +1,16 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pgadmin
+  namespace: database
+  labels:
+    app: pgadmin
+spec:
+  type: NodePort
+  ports:
+    - name: 
+      port: 80
+      nodePort: 30889
+  selector:
+    app: pgadmin
