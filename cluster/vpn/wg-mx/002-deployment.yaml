@@ -65,7 +65,7 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
       nodeSelector:
-        zone: mexico
+        zone: mx
   strategy:
     type: RollingUpdate
     rollingUpdate:

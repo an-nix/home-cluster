@@ -1,0 +1,20 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+#  namespace: homa
+  labels:
+    app: redis
+    kubernetes.io/name: redis
+spec:
+  ports:
+    - name: 
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+      nodePort: 32379
+  selector:
+    app: redis
+  type: NodePort

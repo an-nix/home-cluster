@@ -65,7 +65,7 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
       nodeSelector:
-        zone: alsace
+        zone: al
   strategy:
     type: RollingUpdate
     rollingUpdate:

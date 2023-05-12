@@ -16,12 +16,12 @@
         "dns01": {
           "webhook": {
             "config": {
-              "applicationKey": "fea14ed3500a90c4",
+              "applicationKey": "d789b32315aba3d1",
               "applicationSecretRef": {
                 "key": "applicationSecret",
                 "name": "ovh-credentials"
               },
-              "consumerKey": "67bca6b6eea3a1013e0712952c7e1040",
+              "consumerKey": "2c8f3ce5374bc1db0ea5156675e9034c",
               "endpoint": "ovh-eu"
             },
             "groupName": "meba.xyz",

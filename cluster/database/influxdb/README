@@ -1,3 +1,0 @@
-kubectl create secret generic mariadb --from-literal=root-password='' -n homa
-
-

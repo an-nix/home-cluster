@@ -19,16 +19,10 @@ spec:
         app: mosquitto
     spec:
       volumes:
-        - name: mosquitto-conf
+        - name: mosquitto-config
           configMap:
-            name: mosquitto
+            name: mosquitto-config
             defaultMode: 420
-        #- name: mosquitto-passwd
-        #  configMap:
-        #    name: mosquitto-passwd
-        #    items:
-        #    - key: passwdfile
-        #      path: passwdfile
         - name: localtime
           hostPath:
             path: /etc/localtime
@@ -48,13 +42,9 @@ spec:
               cpu: 500m
               memory: 500Mi
           volumeMounts:
-            - name: mosquitto-conf
+            - name: mosquitto-config
               readOnly: true
               mountPath: /mosquitto/config
-            #  subPath: mosquitto.conf
-            #- name: mosquitto-passwd
-            #  mountPath: /mosquitto/config/passwdfile
-            #  subPath: passwdfile
             - name: localtime
               mountPath: /etc/localtime
           terminationMessagePath: /dev/termination-log

@@ -22,7 +22,7 @@ spec:
         prometheus.io/scrape: "false"
     spec:
       nodeSelector:
-        zone: datacenter
+        usage: hci
       containers:
       - name: rsyslog
         image: mebaxyz/rsyslog-server:latest
