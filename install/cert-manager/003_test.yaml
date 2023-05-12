@@ -8,4 +8,4 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  secretName: test-meba-xyz-tls
+  secretName: who-tls-prod
