@@ -1,0 +1,8 @@
+# User Secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user
+data:
+  password: dXNlcg==

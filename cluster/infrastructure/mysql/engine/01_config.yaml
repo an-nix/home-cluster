@@ -1,0 +1,20 @@
+# Config Map
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb
+data:
+  UMASK: "0660"
+  UMASK_DIR: "0750"
+
+# Root Secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb
+stringData:
+  password: MariaDB11!
+  root-password: MariaDB11!
+
