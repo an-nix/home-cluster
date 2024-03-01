@@ -1,0 +1,29 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: coder
+  namespace: dev
+  labels:
+    application: coder
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+  - hosts:
+      - code.meba.xyz
+    secretName: tls-home
+  rules:
+    - host: "code.meba.xyz"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: "coder"
+                port:
+                  number: 8123
