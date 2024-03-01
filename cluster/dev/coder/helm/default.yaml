@@ -247,7 +247,8 @@ coder:
 
   # coder.nodeSelector -- Node labels for constraining coder pods to nodes.
   # See: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-  nodeSelector: {}
+  nodeSelector: 
+    usage: hci
   #  kubernetes.io/os: linux
 
   # coder.service -- The Service object to expose for Coder.
