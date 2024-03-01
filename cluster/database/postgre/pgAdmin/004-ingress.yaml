@@ -14,10 +14,10 @@ spec:
   # ingressClassName: "ingress-nginx"
   tls:
   - hosts:
-      - postgresql.db.meba.xyz
+      - pgadmin.db.meba.xyz
     secretName: tls-postgres
   rules:
-    - host: "postgresql.db.meba.xyz"
+    - host: "pgadmin.db.meba.xyz"
       http:
         paths:
           - path: /

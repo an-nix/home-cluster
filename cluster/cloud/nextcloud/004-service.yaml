@@ -1,0 +1,38 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nextcloud-app
+  namespace: cloud
+  labels:
+    app: nextcloud-app
+    kubernetes.io/name: nextcloud-app
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+#      nodePort: 30080
+  selector:
+    app: nextcloud-app
+
+#---
+#
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: nextcloud-appfpm
+#  namespace: cloud
+#  labels:
+#    app: nextcloud-appfpm
+#    kubernetes.io/name: nextcloud-appfpm
+#spec:
+#  type: ClusterIP
+#  ports:
+#    - name: http
+#      port: 9000
+#      targetPort: 9000
+#  selector:
+#    app: nextcloud-app

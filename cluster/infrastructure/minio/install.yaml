@@ -1,0 +1,96 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: minio
+  namespace: infrastructure
+  labels:
+    app: minio
+spec:
+  selector:
+    app: minio
+  ports:
+    - name: minio
+      port: 9000
+    - name: console
+      port: 9001
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: infrastructure
+  labels:
+    app: minio
+spec:
+  serviceName: "minio"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+#        directpv.min.io/organization: minio
+#        directpv.min.io/app: minio-home
+#        directpv.min.io/tenant: tenant-1
+    spec:
+      nodeSelector:
+        minio: "true"
+      containers:
+      - name: minio
+        image: minio/minio
+        env:
+        - name: MINIO_ACCESS_KEY
+          value: ${MINIO_USER}
+        - name: MINIO_SECRET_KEY
+          value: ${MINIO_PASSWORD}
+        volumeMounts:
+        - name: minio-data-1
+          mountPath: /data1
+        - name: minio-data-2
+          mountPath: /data2
+        - name: minio-data-3
+          mountPath: /data3
+        - name: minio-data-4
+          mountPath: /data4
+        args:
+        - "server"
+        #- "http://minio-{0...3}.minio.default.svc.cluster.local:9000/data{1...4}"
+        - "/data{1..4}"
+        - "--console-address"
+        - ":9001"
+  volumeClaimTemplates: # This is the specification in which you reference the StorageClass
+  - metadata:
+      name: minio-data-1
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: directpv-min-io # This field references the existing StorageClass
+  - metadata:
+      name: minio-data-2
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: directpv-min-io # This field references the existing StorageClass
+  - metadata:
+      name: minio-data-3
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: directpv-min-io # This field references the existing StorageClass
+  - metadata:
+      name: minio-data-4
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: directpv-min-io # This field references the existing StorageClass

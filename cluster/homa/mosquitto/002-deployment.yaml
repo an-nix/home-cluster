@@ -29,7 +29,7 @@ spec:
             type: ''
       containers:
         - name: mosquitto
-          image: 'eclipse-mosquitto:2.0.14'
+          image: 'eclipse-mosquitto:latest'
           ports:
             - containerPort: 1883
               protocol: TCP

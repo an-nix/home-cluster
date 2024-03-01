@@ -1,0 +1,32 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  generation: 2
+  labels:
+    team: meba
+  name: nextcloud-cluster
+  namespace: cloud
+spec:
+  allowedSourceRanges: []
+  databases:
+    nextcloud: nextcloud
+  enableConnectionPooler: false
+  numberOfInstances: 2
+  postgresql:
+    version: '15'
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+  teamId: meba
+  users:
+    nextcloud: []
+  volume:
+    iops: 3000
+    size: 4Gi
+    throughput: 125
+status:
+  PostgresClusterStatus: Running

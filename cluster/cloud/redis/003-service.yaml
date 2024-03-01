@@ -1,0 +1,20 @@
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+  namespace: cloud
+  labels:
+    app: redis
+    kubernetes.io/name: redis
+spec:
+  type: ClusterIP
+  ports:
+    - name: 
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
+  

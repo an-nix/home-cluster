@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-operator
+  namespace: database
 data:
   # additional_owner_roles: "cron_admin"
   # additional_pod_capabilities: "SYS_NICE"
@@ -34,7 +35,7 @@ data:
   # default_memory_request: 100Mi
   # delete_annotation_date_key: delete-date
   # delete_annotation_name_key: delete-clustername
-  docker_image: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  docker_image: ghcr.io/zalando/spilo-15:3.0-p1
   # downscaler_annotations: "deployment-time,downscaler/*"
   # enable_admin_role_for_users: "true"
   # enable_crd_registration: "true"
@@ -74,7 +75,7 @@ data:
   # kube_iam_role: ""
   # kubernetes_use_configmaps: "false"
   # log_s3_bucket: ""
-  logical_backup_docker_image: "registry.opensource.zalan.do/acid/logical-backup:v1.8.2"
+  logical_backup_docker_image: "registry.opensource.zalan.do/acid/logical-backup:v1.10.0"
   # logical_backup_google_application_credentials: ""
   logical_backup_job_prefix: "logical-backup-"
   logical_backup_provider: "s3"
@@ -97,7 +98,7 @@ data:
   # min_cpu_limit: 250m
   # min_memory_limit: 250Mi
   # minimal_major_version: "9.6"
-  # node_readiness_label: "status:ready"
+  node_readiness_label: "postgre:ready"
   # node_readiness_label_merge: "OR"
   # oauth_token_secret_name: postgresql-operator
   # pam_configuration: |

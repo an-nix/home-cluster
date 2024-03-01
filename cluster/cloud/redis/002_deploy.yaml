@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
+  namespace: cloud
   labels:
     app: redis
 spec:
@@ -15,8 +16,7 @@ spec:
       labels:
         app: redis
     spec:
-      nodeSelector:
-        usage: hci
+      nodeName: hcis1
       containers:
       - name: redis
         image: redis:latest
@@ -37,7 +37,7 @@ spec:
           emptyDir: {}
         - name: config
           configMap:
-            name: example-redis-config
+            name: redis-config
             items:
             - key: redis-config
               path: redis.conf

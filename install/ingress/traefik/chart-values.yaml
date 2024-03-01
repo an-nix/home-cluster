@@ -1,0 +1,42 @@
+---
+ports:
+  traefik:
+    port: 8080
+    expose: true
+    exposedPort: 8080
+    protocol: TCP
+# MQTT
+  mqtt:
+    port: 1883
+    expose: true
+    exposedPort: 1883
+    protocol: TCP
+  web:
+    expose: true
+    exposedPort: 80
+    port: 8000
+    protocol: TCP
+    redirectTo:
+      port: websecure
+  websecure:
+     expose: true
+     exposedPort: 443
+     port: 8443
+     protocol: TCP
+     tls:
+       certResolver: le
+       domains:
+       - main: meba.xyz
+         sans:
+         - '*.meba.xyz'
+       enabled: true
+       options: ""
+
+additionalArguments:
+- "--providers.kubernetescrd"
+- "--api.dashboard=true"
+- "--api.insecure=true"
+
+ingressRoute:
+  dashboard:
+    enabled: false

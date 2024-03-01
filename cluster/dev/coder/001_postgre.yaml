@@ -1,0 +1,33 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  generation: 2
+  labels:
+    team: meba
+  name: meba-coder-cluster
+  namespace: dev
+spec:
+  allowedSourceRanges: []
+  databases:
+    coder: coder
+    homeassistant: homeassis
+  enableConnectionPooler: false
+  numberOfInstances: 2
+  postgresql:
+    version: '14'
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 50m
+      memory: 100Mi
+  teamId: meba
+  users:
+    coder: []
+  volume:
+    iops: 3000
+    size: 2Gi
+    throughput: 125
+status:
+  PostgresClusterStatus: Running

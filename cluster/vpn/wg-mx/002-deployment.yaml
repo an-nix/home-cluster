@@ -23,11 +23,11 @@ spec:
           image: 'lscr.io/linuxserver/wireguard:latest'
           env:
           - name: SERVERURL
-            value: "vpn.meba.xyz"
+            value: "mx.vpn.meba.xyz"
           - name: SERVERPORT
             value: "40453"
           - name: PEERS
-            value: "p30,elenaFreePhone,elenaIPad,elenaMxPhone, freebox"
+            value: "p30,elenaFreePhone,elenaIPad,freebox,leap,guest"
           - name: PEERDNS
             value: "auto"
           - name: INTERNAL_SUBNET
