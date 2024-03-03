@@ -40,3 +40,5 @@ additionalArguments:
 ingressRoute:
   dashboard:
     enabled: false
+nodeSelector: 
+  zone: dtc

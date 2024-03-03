@@ -6,9 +6,9 @@ metadata:
   labels:
     app: node-red
 spec:
-  storageClassName:
+  storageClassName: nfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
